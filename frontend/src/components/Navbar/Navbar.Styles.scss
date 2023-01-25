@@ -1,0 +1,25 @@
+.heading-primary{
+    text-decoration: none;
+    color: #F9F5EB;
+}
+
+.icon{
+    color: #f0ebf9;
+}
+
+.sidebar{
+    width: 240px;
+    padding: auto 20px;
+    height: 100%;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #1C3879;
+
+    a{
+        text-decoration: none;
+        color: #1C3879;
+    }
+}

@@ -1,0 +1,41 @@
+.footer{
+    width: 100%;
+    background: #1C3879;
+    position: absolute;
+    bottom: 0;
+    padding: 5px 0;
+    text-align: center;
+    color: #F9F5EB;
+    font-size: 14px;
+    letter-spacing: 1px;
+
+    a{
+        text-decoration: none;
+        color: #F9F5EB;
+        transition: all 0.2s;
+        display: inline-block;
+        position: relative;
+
+        &::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            transform: scaleX(0);
+            height: 1px;
+            bottom: 0;
+            left: 0;
+            background-color: #EAE3D2;
+            transform-origin: bottom right;
+            transition: transform 0.25s ease-out;
+        }
+
+        &:hover{
+            color: #EAE3D2;
+
+            &::after{
+                transform: scaleX(1);
+                transform-origin: bottom left;
+            }
+        }
+    }
+}
