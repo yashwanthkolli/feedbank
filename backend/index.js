@@ -51,7 +51,7 @@ io.on('connection', (socket) => {
 
     socket.on('new message', newMessageRecieved => {
         console.log(newMessageRecieved.complaint_id)
-        io.to(newMessageRecieved.complaint_id).emit('recieve message', newMessageRecieved);
+        socket.broadcast.to(newMessageRecieved.complaint_id).emit('recieve message', newMessageRecieved);
     })
 
     socket.on('disconnect', () => {

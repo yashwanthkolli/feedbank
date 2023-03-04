@@ -36,6 +36,9 @@ const ChatSection = ({update, setUpdate}) => {
     useEffect(() => {
         socket.on('recieve message', (msg) => {
             console.log(msg)
+            if(msg.complaint_id === selectedComplaint._id){
+                setSelectedComplaintChat([...selectedComplaintChat, msg])
+            }
         })
     }, [])
     
@@ -72,8 +75,10 @@ const ChatSection = ({update, setUpdate}) => {
         .then(res => {
             setMessage('')
             socket.emit('new message', res.data.chat)
+            setSelectedComplaintChat([...selectedComplaintChat, res.data.chat])
         })
         .catch(e => {
+            console.log(e)
             toast.error('Unable to send messages!')
         })
     }
@@ -101,9 +106,9 @@ const ChatSection = ({update, setUpdate}) => {
                         <div className='complaint-chat'>
                             {
                                 selectedComplaintChat.map(chat => 
-                                    <div className={chat.sender_id._id === decodeSessionStorage()._id ? 'message right' : 'message left'} key={chat._id}>
-                                        <div className={chat.sender_id._id === decodeSessionStorage()._id ? 'chat-bubble border-box-right' : 'chat-bubble border-box-left'}>
-                                            { chat.sender_id._id === decodeSessionStorage()._id ? 
+                                    <div className={chat.sender_id._id === decodeSessionStorage()._id || chat.sender_id === decodeSessionStorage()._id ? 'message right' : 'message left'} key={chat._id}>
+                                        <div className={chat.sender_id._id === decodeSessionStorage()._id || chat.sender_id === decodeSessionStorage()._id ? 'chat-bubble border-box-right' : 'chat-bubble border-box-left'}>
+                                            { chat.sender_id._id === decodeSessionStorage()._id || chat.sender_id === decodeSessionStorage()._id ? 
                                                 null : 
                                                 <Typography variant="subtitle2" sx={{color: chat.sender_id.role === 'Student' ? '#607EAA' : '#FDA769'}}>{selectedComplaint.anonymity ? 'Anonymous' : chat.sender_id.name}</Typography> }
                                             <Typography variant="body2">{chat.text}</Typography> 

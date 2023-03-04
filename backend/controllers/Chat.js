@@ -16,7 +16,9 @@ exports.chat_registration = async(req, res) => {
         })
 
         await chat.save()
-        res.send({message: 'Chat Saved', chat})
+
+        const fullChat = await Chat.findOne({ _id: chat._id }).populate('sender_id' , `name role`).sort({date: 1})
+        res.send({message: 'Chat Saved', chat: fullChat})
     } catch(e) {
         res.status(500).json(e)
     }
