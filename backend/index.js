@@ -40,7 +40,6 @@ const io = require('socket.io')(server, {
         origin: "http://143.110.188.175/"
     }
 })
-io.set('origins', '*:*');
 
 io.on('connection', (socket) => {
     console.log("New User Connected Socket")
