@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Divider, Paper, Typography, DialogContentText, DialogActions, Pagination, Stack, List, ListItem, ListItemText } from '@mui/material'
 import { styled } from '@mui/material/styles';
-import './TeacherNotificationPage.Styles.scss'
+import './StudentsNotificationPage.Styles.scss'
 import axios from 'axios';
 import { decodeSessionStorage } from '../../../helpers/helpers';
 import { toast } from 'react-toastify';
@@ -16,7 +16,7 @@ const PaperComponent = styled(Paper)(( ) => ({
     height: 'calc(100vh - 200px)'
 }));
 
-const TeacherNotificationPage = () => {
+const StudentNotificationPage = () => {
     const params = useParams()
 
     const [notifications, setNotifications] = useState([])
@@ -59,7 +59,7 @@ const TeacherNotificationPage = () => {
                 <div className='content'>
                     <List sx={{ mb: 2, pt: 0 }} style={{maxHeight: '100%', overflow: 'auto'}}>
                     {notifications.map((notification) => (
-                        <Link to={`/notifications/${notification._id}`} key={notification._id}>
+                        <Link to={`/my-notifications/${notification._id}`} key={notification._id}>
                             <ListItem button>
                                 <ListItemText primary={notification.heading} />
                                 <div style={{textAlign: 'right', marginLeft: '30px', width: '30%'}}>
@@ -87,9 +87,6 @@ const TeacherNotificationPage = () => {
                             <DialogContentText>
                             {selectedNotification ? selectedNotification.body : 'Loading...'}
                             </DialogContentText>
-                            <DialogActions>
-                                <CustomButton label='Delete' />
-                            </DialogActions>
                         </React.Fragment>
                     }
             />
@@ -97,4 +94,4 @@ const TeacherNotificationPage = () => {
     )
 }
 
-export default TeacherNotificationPage
+export default StudentNotificationPage

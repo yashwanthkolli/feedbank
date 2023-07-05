@@ -40,7 +40,7 @@ exports.user_login = async(req, res) => {
         const user = await User.findOne({ username })
 
         if(!user) throw createError(500, 'User not found')
-        if(user.number_of_strikes >= 1) throw createError(500, 'Account banned with 3 strikes')
+        if(user.number_of_strikes >= 1) throw createError(500, 'Account banned with 1 strikes')
 
         const { _id, name, school_id, role } = user
         await user.comparePassword(password, function(err, isMatch) {
@@ -119,6 +119,18 @@ exports.get_school_students = async(req, res) => {
 
         res.send(users)
     } catch(e) {
+        res.status(500).json(e)
+    }
+}
+
+exports.add_strike = async(req, res) => {
+    try{
+        await User.findByIdAndUpdate(req.params.id, { $inc:  {"number_of_strikes": 1}})
+
+        res.send({message: 'Reported!'})
+    }   
+    catch(e) {
+        console.log(e)
         res.status(500).json(e)
     }
 }

@@ -47,7 +47,7 @@ const CreateComplaint = () => {
 
     const onConfirm = async () => {
         const id = toast.loading("Please wait...")
-        await axios.post('http://localhost:5000/complaint/register', {
+        await axios.post(`${process.env.REACT_APP_API}/complaint/register`, {
                     subject, 
                     complaint_details: body, 
                     student_id: decodeSessionStorage()._id,

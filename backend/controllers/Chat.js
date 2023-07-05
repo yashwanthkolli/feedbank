@@ -31,6 +31,7 @@ exports.get_complaints_chat = async(req, res) => {
 
         res.send({chat, complaint})
     } catch(e) {
+        console.log(e)
         res.status(500).json(e)
     }
 }

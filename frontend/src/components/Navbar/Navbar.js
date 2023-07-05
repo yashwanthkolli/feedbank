@@ -52,7 +52,7 @@ const Navbar = () => {
     const studentNav = [
         { id: 1,path: `/profile`, text: 'Profile', icon: FaRegUserCircle },
         { id: 2,path: `/`, text: 'Home', icon: AiOutlineHome },
-        { id: 3,path: `/notifications`, text: 'Notifications', icon: MdNotificationsActive },
+        { id: 3,path: `/my-notifications`, text: 'Notifications', icon: MdNotificationsActive },
         { id: 4,path: `/my-complaints`, text: 'My Complaints', icon: HiOutlineDocumentDuplicate },
         { id: 5,path: `/create/complaint`, text: 'Create Complaint', icon: HiOutlineDocumentAdd }
     ]

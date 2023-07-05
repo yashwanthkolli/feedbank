@@ -15,6 +15,7 @@ import StudentsListPage from '../StudentsListPage/StudentsListPage'
 import TeachersComplaintPage from '../ComplaintsPage/TeachersComplaintPage/TeachersComplaintPage'
 import CreateComplaint from '../CreateComplaint/CreateComplaint'
 import StudentsComplaintPage from '../ComplaintsPage/StudentsComplaintPage/StudentsComplaintPage'
+import StudentNotificationPage from '../NotificationsPage/StudentsNotificationPage/StudentsNotificationPage'
 
 const Homepage = () => {
     const { pathname } = useLocation()
@@ -44,6 +45,8 @@ const Homepage = () => {
                 <Route path='/students' element={<TeacherProtectedRoute><StudentsListPage /></TeacherProtectedRoute>} />
 
                 <Route path='/create/complaint' element={<CreateComplaint />} />
+                <Route path='/my-notifications' element={<StudentNotificationPage />} />
+                <Route path='/my-notifications/:id' element={<StudentNotificationPage />} />
                 <Route path='/my-complaints' element={<StudentsComplaintPage />} />
                 <Route path='/my-complaints/:id' element={<StudentsComplaintPage />} />
             </Routes>

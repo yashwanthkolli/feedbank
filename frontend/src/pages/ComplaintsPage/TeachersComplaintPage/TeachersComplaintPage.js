@@ -6,7 +6,7 @@ import { decodeSessionStorage } from '../../../helpers/helpers';
 const TeachersComplaintPage = () => {
     return (
         <ComplaintSection 
-            APIurl={`http://localhost:5000/complaint/get/all/school/${decodeSessionStorage().school_id}`}
+            APIurl={`${process.env.REACT_APP_API}/complaint/get/all/school/${decodeSessionStorage().school_id}`}
             ListItemLink='/complaints/'
         />
     )

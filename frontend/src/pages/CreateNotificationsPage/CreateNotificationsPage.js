@@ -34,7 +34,7 @@ const CreateNotificationsPage = () => {
 
     const onConfirm = async () => {
         const id = toast.loading("Please wait...")
-        await axios.post('http://localhost:5000/notification/register', {
+        await axios.post(`${process.env.REACT_APP_API}/notification/register`, {
                     heading, 
                     body, 
                     school_id: decodeSessionStorage().school_id

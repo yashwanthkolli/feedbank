@@ -36,7 +36,7 @@ const ProfilePage = () => {
     const [update, setUpdate] = useState(false)
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/user/get/${decodeSessionStorage()._id}`)
+        axios.get(`${process.env.REACT_APP_API}/user/get/${decodeSessionStorage()._id}`)
         .then(res => {
             setUser(res.data)
             setNewEmail(res.data.contact.email)
@@ -54,7 +54,7 @@ const ProfilePage = () => {
 
     const onSave = async () => {
         if(newEmail !== user.contact.email || newPhone !== user.contact.phone_number) {
-            await axios.post('http://localhost:5000/user/update/contact', {
+            await axios.post(`${process.env.REACT_APP_API}/user/update/contact`, {
                     username: user.username, 
                     password, 
                     email: newEmail,
@@ -69,7 +69,7 @@ const ProfilePage = () => {
             .catch(e => toast.error('Failed to Update Contact Details'))
         }
         if(newPassword){
-            await axios.post('http://localhost:5000/user/update/password', {
+            await axios.post(`${process.env.REACT_APP_API}/user/update/password`, {
                     username: user.username, 
                     password, 
                     newPassword

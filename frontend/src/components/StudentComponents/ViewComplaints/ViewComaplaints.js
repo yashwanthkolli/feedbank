@@ -85,7 +85,7 @@ const ViewComplaint = () => {
 
     useEffect(() => {
         axios.post(
-            `${process.env.REACT_APP_API}/complaint/get/all/school/${decodeSessionStorage().school_id}`, 
+            `${process.env.REACT_APP_API}/complaint/get/all/student/${decodeSessionStorage()._id}`, 
             { offset: 0 },
             { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } }
         )
@@ -131,7 +131,7 @@ const ViewComplaint = () => {
                             scrollableTarget="complaints-list"
                         >
                         {filteredComplaints.map((complaint) => (
-                            <Link to={`/complaints/${complaint._id}`} key={complaint._id}>
+                            <Link to={`/my-complaints/${complaint._id}`} key={complaint._id}>
                                 <ListItem button sx={{bgcolor: complaint.resolved ? '#1bb21ea3' : 'auto'}}>
                                     <ListItemAvatar>
                                     <Avatar sx={{ bgcolor: complaint.anonymity ? 'grey' : '#607EAA' }}>
@@ -159,7 +159,7 @@ const ViewComplaint = () => {
                 </Paper>
                 <AppBar position="absolute" sx={{ top: 'auto', bottom: 0 }}>
                     <Toolbar>
-                    <Link to='/complaints' style={{color: 'white'}}>
+                    <Link to='/my-complaints' style={{color: 'white'}}>
                         <IconButton color="inherit" aria-label="open drawer">
                             <HiOutlineDocumentDuplicate />
                         </IconButton>

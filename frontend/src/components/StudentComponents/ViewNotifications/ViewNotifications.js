@@ -104,7 +104,7 @@ const ViewNotifications = () => {
                     </Typography>
                     <List sx={{ mb: 2, pt: 0 }} style={{maxHeight: '100%', overflow: 'auto'}}>
                     {filteredNotifications.map((notification) => (
-                        <Link to={`/notifications/${notification._id}`} key={notification._id}>
+                        <Link to={`/my-notifications/${notification._id}`} key={notification._id}>
                             <ListItem button>
                                 <ListItemText primary={notification.heading} secondary={notification.body} />
                                 <div style={{textAlign: 'right', marginLeft: '30px', width: '30%'}}>
@@ -118,7 +118,7 @@ const ViewNotifications = () => {
                 </Paper>
                 <AppBar position="absolute" sx={{ top: 'auto', bottom: 0 }}>
                     <Toolbar>
-                    <Link to='/notifications' style={{color: 'white'}}>
+                    <Link to='/my-notifications' style={{color: 'white'}}>
                         <IconButton color="inherit" aria-label="open drawer">
                             <MdOutlineNotificationsActive />
                         </IconButton>

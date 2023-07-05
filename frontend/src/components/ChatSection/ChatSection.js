@@ -32,19 +32,10 @@ const ChatSection = ({update, setUpdate}) => {
     const [selectedComplaint, setSelectedComplaint] = useState(null)
     const [selectedComplaintChat, setSelectedComplaintChat] = useState([])
     const [message, setMessage] = useState('')
-
-    useEffect(() => {
-        socket.on('recieve message', (msg) => {
-            console.log(msg)
-            if(msg.complaint_id === selectedComplaint._id){
-                setSelectedComplaintChat([...selectedComplaintChat, msg])
-            }
-        })
-    }, [])
     
     useEffect(() => {
         if(params.id) {
-            axios.get(`http://localhost:5000/chat/get/${params.id}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
+            axios.get(`${process.env.REACT_APP_API}/chat/get/${params.id}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
             .then(res => {
                 setSelectedComplaint(res.data.complaint)
                 setSelectedComplaintChat(res.data.chat)
@@ -64,7 +55,7 @@ const ChatSection = ({update, setUpdate}) => {
 
     const onSendMessage = async () => {
         axios.post(
-            'http://localhost:5000/chat/register', 
+            `${process.env.REACT_APP_API}/chat/register`, 
             {
                 text: message,
                 sender_id: decodeSessionStorage()._id,
@@ -84,13 +75,37 @@ const ChatSection = ({update, setUpdate}) => {
     }
 
     const onMarkAsResolved = async() => {
-        axios.get(`http://localhost:5000/complaint/${selectedComplaint._id}/resolved`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
+        axios.get(`${process.env.REACT_APP_API}/complaint/${selectedComplaint._id}/resolved`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
         .then(res => {
             toast.success('Marked as Resolved')
             setUpdate(!update)
         })
         .catch(e => toast.error('Failed to process'))
     }
+
+    const onReport = async() => {
+        console.log(socket.listeners())
+        axios.get(`${process.env.REACT_APP_API}/user/strike/${selectedComplaint.student_id._id}`)
+        .then(res => {
+            toast.error('Account Reported')
+        })
+        .catch(e => toast.error('Failed to process'))
+    }
+
+    useEffect(() => {
+        socket.on('recieve message', async (msg) => {
+            await axios.get(`${process.env.REACT_APP_API}/chat/get/${params.id}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
+            .then(res => {
+                if(msg.complaint_id === params.id){
+                    setSelectedComplaintChat(res.data.chat)
+                }
+            })
+            .catch(e => console.log(e))
+            // if(msg.complaint_id === params.id){
+            //     setSelectedComplaintChat([...selectedComplaintChat, msg])
+            // }
+        })
+    }, [])
 
     return (
         <div className='chat-section'>
@@ -121,7 +136,7 @@ const ChatSection = ({update, setUpdate}) => {
                         </div>
                     </div>
                     <div className='chat-actions'>
-                        {decodeSessionStorage().role === 'Teacher' ? <Button variant="contained" color="error" disableElevation sx={{fontSize: '24px'}}><TbMessageReport /></Button> : null}
+                        {decodeSessionStorage().role === 'Teacher' ? <Button variant="contained" color="error" disableElevation sx={{fontSize: '24px'}} onClick={onReport}><TbMessageReport /></Button> : null}
                         <Button variant="contained" color="success" disableElevation sx={{fontSize: '24px'}} onClick={onMarkAsResolved}><IoIosCheckmarkCircleOutline /></Button>
                         <StyledInputBase 
                             placeholder="Type a Message"

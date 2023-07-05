@@ -59,7 +59,7 @@ const StudentsListPage = () => {
     const [search, setSearch] = useState('')
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/user/get/school/${decodeSessionStorage().school_id}`)
+        axios.get(`${process.env.REACT_APP_API}/user/get/school/${decodeSessionStorage().school_id}`)
         .then(res => setStudents(res.data))
         .catch(e => toast.error('Unable to fetch details!'))
     })

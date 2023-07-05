@@ -16,7 +16,7 @@ const Login = () => {
 
     const handleLogin = async() => {
         const id = toast.loading("Please wait...")
-        await axios.post('http://localhost:5000/user/login', { username, password })
+        await axios.post(`${process.env.REACT_APP_API}/user/login`, { username, password })
         .then(res => {
             setSessionStorage('token', res.data.token)
             toast.update(id, { 
