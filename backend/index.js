@@ -35,19 +35,6 @@ app.use('/chat', auth, chatRoutes)
 
 const port = process.env.PORT || 8082;
 
-server.listen(port, () => {
-    console.log("server running");
-});
-
-app.use((req, res, next) => {
-    next(createError(404));
-});
-
-app.use((err, req, res, next) => {
-    console.log(err);`enter code here`
-    res.sendStatus(500);
-});
-
 const io = require('socket.io')(server, {
     allowEIO3: true /* false by default**/ ,
     pingTimeout: 60000,
@@ -72,3 +59,16 @@ io.on('connection', (socket) => {
         console.log('User Disconnected');
     });
 })
+
+server.listen(port, () => {
+    console.log("server running");
+});
+
+app.use((req, res, next) => {
+    next(createError(404));
+});
+
+app.use((err, req, res, next) => {
+    console.log(err);`enter code here`
+    res.sendStatus(500);
+});
