@@ -39,7 +39,8 @@ const io = require('socket.io')(server, {
     allowEIO3: true /* false by default**/ ,
     pingTimeout: 60000,
     cors: {
-        origin: "http://143.110.188.175/"
+        origin: "http://143.110.188.175",
+        methods: ["GET", "POST"]
     }
 })
 
