@@ -7,6 +7,9 @@ const cors = require('cors')
 
 const app = express();
 
+const http = require("http");
+const server = http.createServer(app);
+
 //Database Connetion
 const connectDB = require('./config/db');
 connectDB()
@@ -32,7 +35,18 @@ app.use('/chat', auth, chatRoutes)
 
 const port = process.env.PORT || 8082;
 
-const server = app.listen(port, () => console.log(`Server running on port ${port}`));
+server.listen(4000, () => {
+    console.log("server running");
+});
+
+app.use((req, res, next) => {
+    next(createError(404));
+});
+
+app.use((err, req, res, next) => {
+    console.log(err);`enter code here`
+    res.sendStatus(500);
+});
 
 const io = require('socket.io')(server, {
     allowEIO3: true /* false by default**/ ,
