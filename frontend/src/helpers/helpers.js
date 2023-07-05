@@ -1,7 +1,12 @@
 import { decodeToken } from 'react-jwt';
 import io from 'socket.io-client'
 
-export const socket = io(process.env.REACT_APP_API)
+export const socket = io(process.env.REACT_APP_API, {
+    withCredentials: true,
+    extraHeaders: {
+      "my-custom-header": "abcd"
+    }
+})
 
 export const setSessionStorage = (key, value) => {
     if(window !== 'undefined'){
