@@ -42,7 +42,7 @@ const ChatSection = ({update, setUpdate}) => {
             })
             .catch(e => toast.error('Unable to get details!'))
 
-            socket.emit('join chat', params.id)
+            // socket.emit('join chat', params.id)
         }
     }, [params])
 
@@ -54,16 +54,19 @@ const ChatSection = ({update, setUpdate}) => {
     }, [selectedComplaintChat])
 
     useEffect  (() => {
+        console.log(0)
         const interval = setInterval(() => {
+            console.log(1)
             axios.get(`${process.env.REACT_APP_API}/chat/get/${params.id}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
             .then(res => {
                 setSelectedComplaintChat(res.data.chat)
+                console.log(2)
             })
             .catch(e => toast.error('Unable to get details!'))
         }, 3000)
         
         return () => clearInterval(interval)
-    }, [selectedComplaintChat])
+    }, [selectedComplaintChat, params.id])
 
     const onSendMessage = async () => {
         axios.post(
@@ -77,7 +80,7 @@ const ChatSection = ({update, setUpdate}) => {
         )
         .then(res => {
             setMessage('')
-            socket.emit('new message', res.data.chat)
+            // socket.emit('new message', res.data.chat)
             setSelectedComplaintChat([...selectedComplaintChat, res.data.chat])
         })
         .catch(e => {
@@ -104,20 +107,20 @@ const ChatSection = ({update, setUpdate}) => {
         .catch(e => toast.error('Failed to process'))
     }
 
-    useEffect(() => {
-        socket.on('recieve message', async (msg) => {
-            await axios.get(`${process.env.REACT_APP_API}/chat/get/${params.id}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
-            .then(res => {
-                if(msg.complaint_id === params.id){
-                    setSelectedComplaintChat(res.data.chat)
-                }
-            })
-            .catch(e => console.log(e))
-            // if(msg.complaint_id === params.id){
-            //     setSelectedComplaintChat([...selectedComplaintChat, msg])
-            // }
-        })
-    }, [])
+    // useEffect(() => {
+    //     socket.on('recieve message', async (msg) => {
+    //         await axios.get(`${process.env.REACT_APP_API}/chat/get/${params.id}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
+    //         .then(res => {
+    //             if(msg.complaint_id === params.id){
+    //                 setSelectedComplaintChat(res.data.chat)
+    //             }
+    //         })
+    //         .catch(e => console.log(e))
+    //         // if(msg.complaint_id === params.id){
+    //         //     setSelectedComplaintChat([...selectedComplaintChat, msg])
+    //         // }
+    //     })
+    // }, [])
 
     return (
         <div className='chat-section'>
