@@ -53,6 +53,18 @@ const ChatSection = ({update, setUpdate}) => {
         }
     }, [selectedComplaintChat])
 
+    useEffect  (() => {
+        const interval = setInterval(() => {
+            axios.get(`${process.env.REACT_APP_API}/chat/get/${params.id}`, { headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` } })
+            .then(res => {
+                setSelectedComplaintChat(res.data.chat)
+            })
+            .catch(e => toast.error('Unable to get details!'))
+        }, 3000)
+        
+        return () => clearInterval(interval)
+    }, [selectedComplaintChat])
+
     const onSendMessage = async () => {
         axios.post(
             `${process.env.REACT_APP_API}/chat/register`, 
